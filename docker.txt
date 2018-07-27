@@ -1,0 +1,25 @@
+docker build -f .\Dockerfile -t docker-spring-boot .
+docker run -p 8085:8085 docker-spring-boot
+docker stop $(docker ps -a -f name=docker-spring-boot -q)
+docker rmi $(docker images -a -q)
+docker rm $(docker images -a -q)
+docker image inspect image-file-name
+========================================
+PUSh :
+docker tag 34d2075b23bd pura1029/docker-spring-boot-mongodb:1.0
+docker push pura1029/docker-spring-boot-mongodb:1.0
+======================================================================
+docker run --name gtm-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=root -e MYSQL_PASSWORD=password -d mysql:5.6
+
+docker build -f .\Dockerfile -t spring-boot-mysql .
+ 
+docker run --name spring-boot-mysql-container -p 8086:8086 --link gtm-mysql:mysql -d spring-boot-mysql
+docker logs gtm-mysql
+
+mysql ui : docker run --name mysqlui -d --link gtm-mysql:mysql -p 1030:80 phpmyadmin/phpmyadmin
+
+==================================================================
+docker run --name mongodb -e MONGO_INITDB_ROOT_USERNAME=gautam -e MONGO_INITDB_ROOT_PASSWORD=password -d mongo:3.6
+docker build -f .\Dockerfile -t docker-spring-boot-mongodb .
+
+docker run --name spring-boot-mongodb-container -p 1042:1042 -p 1045:1045 --link mongodb:mongo -d docker-spring-boot-mongodb
