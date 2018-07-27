@@ -11,6 +11,8 @@ services:
     ports:
       - "1042:1042"
       - "1045:1045"
+    networks:
+      - spring-boot-mongodb-net
 
   mongodb:
     container_name: mongodb
@@ -18,4 +20,8 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=gautam
       - MONGO_INITDB_ROOT_PASSWORD=password
-       
+    networks:
+      - spring-boot-mongodb-net
+
+networks:
+  spring-boot-mongodb-net:
