@@ -1,0 +1,9 @@
+keytool -genkey -alias tomcat -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+
+Is CN=Gautam Kumar, OU=CMBU, O=vmware, L=Bangalore, ST=Karnatka, C=IN correct?
+
+=================================================
+keytool -genkey -alias tomcat -storetype JKS -keyalg RSA -keysize 2048 -keystore tomcat-server-ssl.jks -validity 3650
+
+==============================
+keytool -export -keystore tomcat-server-ssl.jks -alias tomcat -file tomcat-server-ssl.crt
