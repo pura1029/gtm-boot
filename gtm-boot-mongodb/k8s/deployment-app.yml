@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: springboot-docker
+spec: 
+  replicas: 2
+  template: 
+    metadata:
+      name: springboot-dev
+      namespace: default 
+      labels: 
+        app: springboot-docker
+    spec: 
+      containers: 
+        - image: pura1029/docker-spring-boot-mongodb:latest
+          name: springboot-docker
+          ports: 
+          - containerPort: 1042
+          - containerPort: 30081
+          env:
+          - name: mongo_uri
+            value: mongo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-docker
+  namespace: default
+  labels:
+      app: springboot-docker
+spec:
+  ports:
+    - name: http
+      port: 1042
+      nodePort: 30080
+      protocol: TCP
+    - name: https
+      port: 30081
+      nodePort: 30081
+      protocol: TCP 
+  selector:
+    app: springboot-docker
+  type: NodePort

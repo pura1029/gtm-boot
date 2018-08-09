@@ -1,4 +1,4 @@
-package com.vmware.gtmboot.dao;
+package com.vmware.boot.consumer.dao;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.vmware.gtmboot.mongo.Student;
+import com.vmware.boot.consumer.model.Student;
 
 @Repository
 public class StudentDaoImpl implements StudentDao {
@@ -24,14 +24,12 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public Student addStudent(Student student) {
-		// TODO Auto-generated method stub
 		mongoTemplate.save(student);
 		return student;
 	}
 
 	@Override
 	public Student updateStudent(int studentId, Student student) {
-		// TODO Auto-generated method stub
 		student.setStudentId(studentId);
 		mongoTemplate.save(student);
 		return student;
@@ -39,7 +37,6 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public Object getStudent(int studentId) {
-		// TODO Auto-generated method stub
 		Query query = new Query();
 		query.addCriteria(Criteria.where("studentId").in(studentId));
 		return mongoTemplate.findOne(query, Student.class);
@@ -56,13 +53,6 @@ public class StudentDaoImpl implements StudentDao {
 		query.addCriteria(Criteria.where("studentId").in(studentId));
 		mongoTemplate.remove(query, Student.class);
 		return getStudentList();
-	}
-
-	@Override
-	public Object getStudentByName(String studentName) {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("name").in(studentName));
-		return mongoTemplate.findOne(query, Student.class);
 	}
 
 }

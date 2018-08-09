@@ -1,0 +1,87 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: boot-mongodb-producer
+spec: 
+  replicas: 2
+  template: 
+    metadata:
+      name: boot-mongodb-producer-dev
+      namespace: default 
+      labels: 
+        app: boot-mongodb-producer
+    spec: 
+      containers: 
+        - image: pura1029/boot-mongodb-producer:latest
+          name: boot-mongodb-producer-container
+          ports: 
+          - containerPort: 1035
+          - containerPort: 30082
+          env:
+          - name: mongo_uri
+            value: mongo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boot-mongodb-producer
+  namespace: default
+  labels:
+      app: boot-mongodb-producer
+spec:
+  ports:
+    - name: http
+      port: 1035
+      nodePort: 30083
+      protocol: TCP
+    - name: https
+      port: 30082
+      nodePort: 30082
+      protocol: TCP 
+  selector:
+    app: boot-mongodb-producer
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: boot-mongodb-consumer
+spec: 
+  replicas: 2
+  template: 
+    metadata:
+      name: boot-mongodb-consumer-dev
+      namespace: default 
+      labels: 
+        app: boot-mongodb-consumer
+    spec: 
+      containers: 
+        - image: pura1029/boot-mongodb-consumer:latest
+          name: boot-mongodb-consumer-container
+          ports: 
+          - containerPort: 1036
+          - containerPort: 30084
+          env:
+          - name: mongo_uri
+            value: mongo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boot-mongodb-consumer
+  namespace: default
+  labels:
+      app: boot-mongodb-consumer
+spec:
+  ports:
+    - name: http
+      port: 1036
+      nodePort: 30085
+      protocol: TCP
+    - name: https
+      port: 30084
+      nodePort: 30084
+      protocol: TCP 
+  selector:
+    app: boot-mongodb-consumer
+  type: NodePort

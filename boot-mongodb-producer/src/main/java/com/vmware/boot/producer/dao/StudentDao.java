@@ -1,8 +1,8 @@
-package com.vmware.gtmboot.dao;
+package com.vmware.boot.producer.dao;
 
 import java.util.List;
 
-import com.vmware.gtmboot.mongo.Student;
+import com.vmware.boot.producer.model.Student;
 
 
 public interface StudentDao {
@@ -10,7 +10,6 @@ public interface StudentDao {
 	Student addStudent(Student student);
 	Student updateStudent(int studentId, Student student);
 	Object getStudent(int studentId);
-	Object getStudentByName(String studentName);
 	List<Student> getStudentList();
 	List<Student> deleteStudent(int studentId);
 

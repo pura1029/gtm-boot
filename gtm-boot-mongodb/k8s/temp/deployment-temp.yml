@@ -1,0 +1,102 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongo-persistent-storage
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/data01"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mongo-persistent-storage-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: mongo
+  name: mongo-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+          - name: mongo-persistent-storage
+            mountPath: /data/db
+      volumes:
+        - name: mongo-persistent-storage
+          persistentVolumeClaim:
+            claimName: mongo-persistent-storage-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: mongo
+  name: mongo-service
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: springboot-docker
+spec: 
+  replicas: 3
+  template: 
+    metadata: 
+      labels: 
+        app: springboot-docker
+    spec: 
+      containers: 
+        - image: pura1029/docker-spring-boot-mongodb:latest
+          name: springboot-docker
+          ports: 
+          - containerPort: 1042
+          - containerPort: 1045
+          env:
+          - name: MONGO_URI
+            value: mongo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-docker
+  labels:
+      app: springboot-docker
+spec:
+  ports:
+    - port: 1042
+      targetPort: 1042
+      port: 1045
+      targetPort: 1045
+  selector:
+    app: springboot-docker
+  type: LoadBalancer
