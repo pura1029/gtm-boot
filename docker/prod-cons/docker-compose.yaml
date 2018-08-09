@@ -1,0 +1,41 @@
+version: '3'
+services:
+  spring-boot-mongodb-producer:
+    container_name: boot-mongodb-producer-container
+    build:
+      context: ../.././boot-mongodb-producer/
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+    image: pura1029/boot-mongodb-producer
+    ports:
+      - "1035:1035"
+      - "30082:30082"
+    networks:
+      - spring-boot-mongodb-net
+      
+  spring-boot-mongodb-consumer:
+    container_name: boot-mongodb-consumer-container
+    build:
+      context: ../.././boot-mongodb-consumer/
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+    image: pura1029/boot-mongodb-consumer
+    ports:
+      - "1036:1036"
+      - "30084:30084"
+    networks:
+      - spring-boot-mongodb-net
+
+  mongodb:
+    container_name: mongo-service
+    image: mongo:3.6
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=gautam
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - spring-boot-mongodb-net
+
+networks:
+  spring-boot-mongodb-net:

@@ -1,16 +1,16 @@
 version: '3'
 services:
   spring-boot-mongodb:
-    container_name: spring-boot-mongodb-container
+    container_name: boot-mongodb-producer-container
     build:
       context: ./
       dockerfile: Dockerfile
       args:
         buildno: 1
-    image: pura1029/docker-spring-boot-mongodb
+    image: pura1029/boot-mongodb-producer
     ports:
-      - "1042:1042"
-      - "1045:1045"
+      - "30082:30082"
+      - "1035:1035"
     networks:
       - spring-boot-mongodb-net
 

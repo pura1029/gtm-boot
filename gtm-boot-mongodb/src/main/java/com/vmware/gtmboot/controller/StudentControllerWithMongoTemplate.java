@@ -50,6 +50,21 @@ public class StudentControllerWithMongoTemplate {
 		LOG.info("End getStudentById() method in StudentControllerWithMongoTemplate.class");
 		return stuObj;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentName}",produces= MediaType.APPLICATION_JSON_VALUE)
+	public Object getStudentByName(@PathVariable String studentName) {
+		LOG.info("Start getStudentById() method in StudentControllerWithMongoTemplate.class");
+		Object stuObj;
+		try {
+			stuObj = studentRepository.getStudentByName(studentName);
+			if(stuObj == null)
+				stuObj = new ErrorResponse();
+		} catch (Exception e) {
+			stuObj = new ErrorResponse();
+		}
+		LOG.info("End getStudentById() method in StudentControllerWithMongoTemplate.class");
+		return stuObj;
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addStudent",produces= MediaType.APPLICATION_JSON_VALUE)
 	public Student addStudent(@RequestBody Student student) {

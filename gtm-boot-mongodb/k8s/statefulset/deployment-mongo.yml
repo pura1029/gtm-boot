@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: mongo-vol
+  name: mongo-controller-vol
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo-vol
+    spec:
+      containers:
+      - image: mongo:3.6
+        name: mongo-volume
+        args:
+          - --auth
+        env:
+          - name: MONGODB_USERNAME
+            value: gautam
+          - name: MONGODB_PASSWORD
+            value: password
+          - name: MONGODB_ROOT_USERNAME
+            value: gautam
+          - name: MONGODB_ROOT_PASSWORD
+            value: password
+          - name: MONGODB_DATABASE
+            value: admin
+        ports:
+        - name: mongo
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+            - name: pvc-128gb
+              mountPath: /data/db
+      volumes:
+        - name: pvc-128gb
+          persistentVolumeClaim:
+                claimName: pvc128gb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: mongo-vol
+  name: mongo-service-vol
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo-vol
