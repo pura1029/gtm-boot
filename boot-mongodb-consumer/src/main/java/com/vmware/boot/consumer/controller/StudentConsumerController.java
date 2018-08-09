@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 @RequestMapping(value = "/api")
 @Api(value="/api")
 public class StudentConsumerController {
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Logger LOG = LoggerFactory.getLogger(StudentConsumerController.class);
 	private final StudentDao studentRepository;
 
 	public StudentConsumerController(StudentDao studentRepository) {
@@ -29,14 +29,14 @@ public class StudentConsumerController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/student/list",produces= MediaType.APPLICATION_JSON_VALUE)
 	public List<Student> getStudentList() {
-		logger.info("Start getStudentList() method in StudentConsumerController.class");
-		logger.info("End getStudentList() method in StudentConsumerController.class");
+		LOG.info("Start getStudentList() method in StudentConsumerController.class");
+		LOG.info("End getStudentList() method in StudentConsumerController.class");
 		return (studentRepository.getStudentList());
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
 	public Object getStudentById(@PathVariable Integer studentId) {
-		logger.info("Start getStudentById() method in StudentConsumerController.class");
+		LOG.info("Start getStudentById() method in StudentConsumerController.class");
 		Object stuObj;
 		try {
 			stuObj = studentRepository.getStudent(studentId);
