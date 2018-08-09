@@ -17,34 +17,34 @@ import com.vmware.boot.producer.model.Student;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(value = "/api/student")
-@Api(value="api/student")
+@RequestMapping(value = "/api")
+@Api(value="/api")
 public class StudentProducerController {
-	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final StudentDao studentRepository;
 
 	public StudentProducerController(StudentDao studentRepository) {
 		this.studentRepository = studentRepository;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/add",produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/student/add",produces= MediaType.APPLICATION_JSON_VALUE)
 	public Student addStudent(@RequestBody Student student) {
-		LOG.info("Start addStudent() method in StudentControllerWithMongoTemplate.class");
-		LOG.info("End addStudent() method in StudentControllerWithMongoTemplate.class");
+		logger.info("Start addStudent() method in StudentControllerWithMongoTemplate.class");
+		logger.info("End addStudent() method in StudentControllerWithMongoTemplate.class");
 		return studentRepository.addStudent(student);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/update/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.PUT, value = "/student/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
 	public Student updateStudent(@PathVariable int studentId, @RequestBody Student student) {
-		LOG.info("Start updateStudent() method in StudentControllerWithMongoTemplate.class");
-		LOG.info("End updateStudent() method in StudentControllerWithMongoTemplate.class");
+		logger.info("Start updateStudent() method in StudentControllerWithMongoTemplate.class");
+		logger.info("End updateStudent() method in StudentControllerWithMongoTemplate.class");
 		return studentRepository.updateStudent(studentId, student);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = "/delete/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.DELETE, value = "/student/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
 	public List<Student> deleteStudent(@PathVariable int studentId) {
-		LOG.info("Start deleteStudent() method in StudentControllerWithMongoTemplate.class");
-		LOG.info("End deleteStudent() method in StudentControllerWithMongoTemplate.class");
+		logger.info("Start deleteStudent() method in StudentControllerWithMongoTemplate.class");
+		logger.info("End deleteStudent() method in StudentControllerWithMongoTemplate.class");
 		return studentRepository.deleteStudent(studentId);
 	}
 }

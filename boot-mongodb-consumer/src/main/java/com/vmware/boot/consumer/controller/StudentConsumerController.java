@@ -17,26 +17,26 @@ import com.vmware.boot.consumer.model.Student;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(value = "/api/student")
-@Api(value="api/student")
+@RequestMapping(value = "/api")
+@Api(value="/api")
 public class StudentConsumerController {
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final StudentDao studentRepository;
 
 	public StudentConsumerController(StudentDao studentRepository) {
 		this.studentRepository = studentRepository;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getList",produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/student/list",produces= MediaType.APPLICATION_JSON_VALUE)
 	public List<Student> getStudentList() {
-		log.info("Start getStudentList() method in StudentConsumerController.class");
-		log.info("End getStudentList() method in StudentConsumerController.class");
+		logger.info("Start getStudentList() method in StudentConsumerController.class");
+		logger.info("End getStudentList() method in StudentConsumerController.class");
 		return (studentRepository.getStudentList());
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/get/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentId}",produces= MediaType.APPLICATION_JSON_VALUE)
 	public Object getStudentById(@PathVariable Integer studentId) {
-		log.info("Start getStudentById() method in StudentConsumerController.class");
+		logger.info("Start getStudentById() method in StudentConsumerController.class");
 		Object stuObj;
 		try {
 			stuObj = studentRepository.getStudent(studentId);
