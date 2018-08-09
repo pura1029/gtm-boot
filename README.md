@@ -11,5 +11,5 @@ step 4: go k8s app yml file : gtm-boot\k8s\prod-cons
 step 5: create the micro service deployment
 
 access :
-producer url : https://{hostName}:{port}/swagger-ui.html#/
+producer url : https://{hostName}:{port}/swagger-ui.html#/   </br>
 consumer url : https://{hostName}:{port}/swagger-ui.html#/
