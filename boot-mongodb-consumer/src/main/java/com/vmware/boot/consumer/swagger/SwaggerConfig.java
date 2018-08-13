@@ -18,22 +18,20 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	@Bean
-	public Docket postsApi() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("public-api")
-				.apiInfo(apiInfo()).select().paths(postPaths()).build();
-	}
+    @Bean
+    public Docket postsApi() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("public-api").apiInfo(apiInfo()).select()
+                .paths(postPaths()).build();
+    }
 
-	private Predicate<String> postPaths() {
-		return or(regex("/api/he.*"), regex("/api/*.*"));
-	}
+    private Predicate<String> postPaths() {
+        return or(regex("/api/he.*"), regex("/api/*.*"));
+    }
 
-	@SuppressWarnings("deprecation")
-	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Hello Swagger")
-				.description("Swagger ui for API reference")
-				.termsOfServiceUrl("http://vmware.com")
-				.contact("Gautam").license("vmware")
-				.licenseUrl("https://vmware.com").version("1.0").build();
-	}
+    @SuppressWarnings("deprecation")
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder().title("Hello Swagger").description("Swagger ui for API reference")
+                .termsOfServiceUrl("http://vmware.com").contact("Gautam").license("vmware")
+                .licenseUrl("https://vmware.com").version("1.0").build();
+    }
 }

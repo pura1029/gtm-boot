@@ -18,31 +18,31 @@ import com.vmware.boot.producer.model.Student;
 
 public class StudentProducerControllerTest {
 
-	@InjectMocks
-	private StudentProducerController studentProducerController;
+    @InjectMocks
+    private StudentProducerController studentProducerController;
 
-	@Mock
-	private StudentDao studentDao;
+    @Mock
+    private StudentDao studentDao;
 
-	@Before
-	public void init() {
-		MockitoAnnotations.initMocks(this);
-	}
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void testAddStudent() {
-		Student student = new Student();
-		student.setStudentId(56);
-		student.setName("Ram");
-		student.setMarks(78);
-		when(studentDao.addStudent(student)).thenReturn(student);
-		
-		Object resObj = studentProducerController.addStudent(student);
-		if(resObj instanceof Student) {
-			//assertEquals(56, ((Student)resObj).getStudentId());
-			assertThat(((Student)resObj).getStudentId(), is(56));
-		}else {
-			assertEquals(400, ((ErrorResponse)resObj).getCode());
-		}
-	}
+    @Test
+    public void testAddStudent() {
+        Student student = new Student();
+        student.setStudentId(56);
+        student.setName("Ram");
+        student.setMarks(78);
+        when(studentDao.addStudent(student)).thenReturn(student);
+
+        Object resObj = studentProducerController.addStudent(student);
+        if (resObj instanceof Student) {
+            //assertEquals(56, ((Student)resObj).getStudentId());
+            assertThat(((Student) resObj).getStudentId(), is(56));
+        } else {
+            assertEquals(400, ((ErrorResponse) resObj).getCode());
+        }
+    }
 }

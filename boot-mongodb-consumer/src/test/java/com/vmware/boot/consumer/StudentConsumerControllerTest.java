@@ -19,66 +19,66 @@ import com.vmware.boot.consumer.model.Student;
 
 public class StudentConsumerControllerTest {
 
-	@InjectMocks
-	private StudentConsumerController studentConsumerController;
+    @InjectMocks
+    private StudentConsumerController studentConsumerController;
 
-	@Mock
-	private StudentDao studentDao;
+    @Mock
+    private StudentDao studentDao;
 
-	@Before
-	public void init() {
-		MockitoAnnotations.initMocks(this);
-	}
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
 
-	@Test
-	public void testGetStudentById() {
-		Student student = new Student();
-		student.setStudentId(56);
-		when(studentDao.getStudent(56)).thenReturn(student);
+    @Test
+    public void testGetStudentById() {
+        Student student = new Student();
+        student.setStudentId(56);
+        when(studentDao.getStudent(56)).thenReturn(student);
 
-		Object resObj = studentConsumerController.getStudentById(56);
-		//assertEquals(56, ((Student)resObj).getStudentId());
-		assertThat(((Student)resObj).getStudentId(), is(56));
-	}
-	
-	@Test
-	public void testGetStudentList() {
-		Student student = new Student();
-		student.setStudentId(56);
-		Student student1 = new Student();
-		student.setStudentId(57);
-		List<Student> listStu = new ArrayList<>();
-		listStu.add(student);
-		listStu.add(student1);
-		when(studentDao.getStudentList()).thenReturn(listStu);
+        Object resObj = studentConsumerController.getStudentById(56);
+        //assertEquals(56, ((Student)resObj).getStudentId());
+        assertThat(((Student) resObj).getStudentId(), is(56));
+    }
 
-		List<Student> actuallistStu = studentConsumerController.getStudentList();
-		assertThat(actuallistStu.size(), is(listStu.size()));
-	}
-	
-	@Test
-	public void testGetStudentById1() {
-		Student student = new Student();
-		student.setStudentId(56);
-		when(studentDao.getStudent(56)).thenReturn(student);
+    @Test
+    public void testGetStudentList() {
+        Student student = new Student();
+        student.setStudentId(56);
+        Student student1 = new Student();
+        student.setStudentId(57);
+        List<Student> listStu = new ArrayList<>();
+        listStu.add(student);
+        listStu.add(student1);
+        when(studentDao.getStudentList()).thenReturn(listStu);
 
-		Object resObj = studentDao.getStudent(56);
-		//assertEquals(56, ((Student)resObj).getStudentId());
-		assertThat(((Student)resObj).getStudentId(), is(56));
-	}
-	
-	@Test
-	public void testGetStudentList1() {
-		Student student = new Student();
-		student.setStudentId(56);
-		Student student1 = new Student();
-		student.setStudentId(57);
-		List<Student> listStu = new ArrayList<>();
-		listStu.add(student);
-		listStu.add(student1);
-		when(studentDao.getStudentList()).thenReturn(listStu);
+        List<Student> actuallistStu = studentConsumerController.getStudentList();
+        assertThat(actuallistStu.size(), is(listStu.size()));
+    }
 
-		List<Student> actuallistStu = studentDao.getStudentList();
-		assertThat(actuallistStu.size(), is(listStu.size()));
-	}
+    @Test
+    public void testGetStudentById1() {
+        Student student = new Student();
+        student.setStudentId(56);
+        when(studentDao.getStudent(56)).thenReturn(student);
+
+        Object resObj = studentDao.getStudent(56);
+        //assertEquals(56, ((Student)resObj).getStudentId());
+        assertThat(((Student) resObj).getStudentId(), is(56));
+    }
+
+    @Test
+    public void testGetStudentList1() {
+        Student student = new Student();
+        student.setStudentId(56);
+        Student student1 = new Student();
+        student.setStudentId(57);
+        List<Student> listStu = new ArrayList<>();
+        listStu.add(student);
+        listStu.add(student1);
+        when(studentDao.getStudentList()).thenReturn(listStu);
+
+        List<Student> actuallistStu = studentDao.getStudentList();
+        assertThat(actuallistStu.size(), is(listStu.size()));
+    }
 }
