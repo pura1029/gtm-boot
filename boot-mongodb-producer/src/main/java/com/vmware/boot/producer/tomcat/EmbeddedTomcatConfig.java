@@ -15,37 +15,37 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 public class EmbeddedTomcatConfig {
 
-	@Bean
-	public ServletWebServerFactory servletContainer() {
-		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+    @Bean
+    public ServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
 
-			@Override
-			protected void postProcessContext(Context context) {
-				SecurityConstraint securityConstraint = new SecurityConstraint();
-				securityConstraint.setUserConstraint("CONFIDENTIAL");
-				SecurityCollection collection = new SecurityCollection();
-				collection.addPattern("/*");
-				securityConstraint.addCollection(collection);
-				context.addConstraint(securityConstraint);
-			}
-		};
-		tomcat.addAdditionalTomcatConnectors(createHttpConnector());
-		return tomcat;
-	}
+            @Override
+            protected void postProcessContext(Context context) {
+                SecurityConstraint securityConstraint = new SecurityConstraint();
+                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                SecurityCollection collection = new SecurityCollection();
+                collection.addPattern("/*");
+                securityConstraint.addCollection(collection);
+                context.addConstraint(securityConstraint);
+            }
+        };
+        tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+        return tomcat;
+    }
 
-	@Value("${server.port.http}")
-	private int serverPortHttp;
+    @Value("${server.port.http}")
+    private int serverPortHttp;
 
-	@Value("${server.port}")
-	private int serverPortHttps;
+    @Value("${server.port}")
+    private int serverPortHttps;
 
-	private Connector createHttpConnector() {
-		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-		connector.setScheme("http");
-		connector.setSecure(false);
-		connector.setPort(serverPortHttp);
-		connector.setRedirectPort(serverPortHttps);
-		return connector;
-	}
+    private Connector createHttpConnector() {
+        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+        connector.setScheme("http");
+        connector.setSecure(false);
+        connector.setPort(serverPortHttp);
+        connector.setRedirectPort(serverPortHttps);
+        return connector;
+    }
 
 }

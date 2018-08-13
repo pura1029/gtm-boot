@@ -16,11 +16,11 @@ import lombok.Setter;
 @Getter
 public class Student {
 
-	@Indexed(unique=true)
-	@Field(order = -1, value = "studentId")
-	@AccessType(Type.PROPERTY)
-	private int studentId;
-	private String name;
-	private int marks;
-	private Date creationDate;
+    @Indexed(unique = true)
+    @Field(order = -1, value = "studentId")
+    @AccessType(Type.PROPERTY)
+    private int studentId;
+    private String name;
+    private int marks;
+    private Date creationDate;
 }
