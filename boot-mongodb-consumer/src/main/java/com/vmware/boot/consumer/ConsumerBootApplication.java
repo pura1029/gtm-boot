@@ -10,8 +10,8 @@ import lombok.extern.log4j.Log4j2;
 public class ConsumerBootApplication {
 
     public static void main(String[] args) {
-        log.info("Start main() method in ConsumerBootApplication.class");
+        log.info("ConsumerBootApplication is Starting...");
         SpringApplication.run(ConsumerBootApplication.class, args);
-        log.info("End main() method in ConsumerBootApplication.class");
+        log.info("ConsumerBootApplication is Running...");
     }
 }
